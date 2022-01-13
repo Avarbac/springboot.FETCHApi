@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UsersController {
 
-    @GetMapping("")
+    @GetMapping()
     public String getUser(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("roles", user.getRoles());
         model.addAttribute("user", user);
-        return "user/index";
+        return "user";
     }
 }

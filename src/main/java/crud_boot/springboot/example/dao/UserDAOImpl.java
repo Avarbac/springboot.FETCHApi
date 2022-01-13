@@ -14,7 +14,7 @@ public class UserDAOImpl implements UserDAO {
     private EntityManager manager;
 
     @Override
-    public User getUserById(Long id) {
+    public User getUserById(int id) {
         return manager.find(User.class, id);
     }
 
@@ -32,16 +32,15 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void deleteUser(Long id) {
-
-        manager.remove(getUserById(id));
+    public void deleteUser(User user) {
+        manager.remove(user);
     }
 
     @Override
-    public void updateUser(User user, Long id) {
+    public void updateUser(int id, User user) {
         User updatedUser = getUserById(id);
-        updatedUser.setName(user.getName());
-        updatedUser.setSurname(user.getSurname());
+        updatedUser.setFirstName(user.getFirstName());
+        updatedUser.setLastName(user.getLastName());
         updatedUser.setAge(user.getAge());
         user.setRoles(updatedUser.getRoles());
         manager.merge(updatedUser);
@@ -49,7 +48,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserByName(String name) {
-        return manager.createQuery("select u from User as u where u.name = :paramName", User.class)
+        return manager.createQuery("select u from User as u where u.firstName = :paramName", User.class)
                 .setParameter("paramName", name)
                 .getSingleResult();
     }
